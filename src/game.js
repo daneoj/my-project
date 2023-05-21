@@ -14,7 +14,7 @@ function update(dt) {
 }
 
 function draw() {
-    ctx.
+    //ctx.
 }
 
 function loop(time) {
