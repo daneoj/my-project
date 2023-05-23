@@ -1,21 +1,34 @@
-var state = {
-    x: 0,
-    y: 0,
-    size: 50,
-    spd: 0.45,
-    color: 'red'
-}
+export class GameObject {
+    constructor() {
+        this.pos =  {x: 0, y: 0};
+        this.size = 50;
+        this.spd = 0.45;
+        this.color = 'red';
+    }
 
-export function drawDobby(ctx) {
-    ctx.fillStyle = state.color;
-    ctx.fillRect(state.x - state.size/2,
-                state.y - state.size/2,
-                state.size, state.size);
-}
+    // eventually might want to let graphics lib handle drawing the GameObject
+    draw(ctx) {
+        ctx.fillStyle = this.color;
+        ctx.fillRect(this.pos.x - this.size/2,
+                    this.pos.y - this.size/2,
+                    this.size, this.size);
+    }
 
-export function updateDobby(vec, dt) {
-   state.x += vec[0] * dt * state.spd;
-   state.y += vec[1] * dt * state.spd;
-}
+    update(vec, dt) {
+        this.pos.x += vec[0] * dt * this.spd;
+        this.pos.y += vec[1] * dt * this.spd;
+    }
 
-export { state };
+    // might want to at least handle rectangles instead of squares for GO's wcollision
+    isInBounds(corners) {
+    corners.array.forEach(element => {
+        if (element.x > this.pos.x - this.size/2 &&
+            element.x < this.pos.x + this.size/2 &&
+            element.y > this.pos.y - this.size/2 &&
+            element.y < this.pos.y + this.size/2)  {
+                return true;
+            }
+        });
+        return false;
+    }
+}

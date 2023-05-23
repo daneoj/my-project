@@ -6,14 +6,16 @@ var width = canvas.width;
 var height = canvas.height;
 var ctx = canvas.getContext("2d");
 
+var dobbz = new dobby.GameObject();
+
 function update(dt) {
     var vec = controls.getAxes();
-    dobby.updateDobby(vec, dt);
+    dobbz.update(vec, dt);
 }
 
 function draw() {
     ctx.clearRect(0, 0, width, height);
-    dobby.drawDobby(ctx);
+    dobbz.draw(ctx);
 }
 
 function loop(time) {
@@ -28,7 +30,7 @@ function loop(time) {
 // initialize
 var lastTime = 0;
 
-dobby.state.x = width/2;
-dobby.state.y = height/2;
+dobbz.pos.x = width/2;
+dobbz.pos.y = height/2;
 // start loop
 window.requestAnimationFrame(loop);
