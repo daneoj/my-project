@@ -50,6 +50,7 @@ gobbz.pos.y = height/2;
 gobbz.size = 0.9 * width;
 gobbz.color = 'green';
 
+
 bobbz.pos.x = width/2;
 bobbz.pos.y = height;
 bobbz.size = 200;
