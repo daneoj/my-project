@@ -47,7 +47,7 @@ dobbz.pos.y = height/2;
 
 gobbz.pos.x = width/2;
 gobbz.pos.y = height/2;
-gobbz.size = 0.9*width;
+gobbz.size = 0.9 * width;
 gobbz.color = 'green';
 
 bobbz.pos.x = width/4;
