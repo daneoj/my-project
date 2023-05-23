@@ -1,6 +1,6 @@
 export class GameObject {
     constructor() {
-        this.pos =  {x: 0, y: 0};
+        this.pos = {x: 0, y: 0};
         this.size = 50;
         this.spd = 0.45;
         this.color = 'red';
@@ -19,16 +19,25 @@ export class GameObject {
         this.pos.y += vec[1] * dt * this.spd;
     }
 
-    // might want to at least handle rectangles instead of squares for GO's wcollision
+    getCorners() {
+        return [
+            [this.pos.x - this.size/2, this.pos.y - this.size/2],
+            [this.pos.x - this.size/2, this.pos.y + this.size/2],
+            [this.pos.x + this.size/2, this.pos.y - this.size/2],
+            [this.pos.x + this.size/2, this.pos.y + this.size/2]
+        ];
+    }
+    // might want to at least handle rectangles instead of squares for GO's collision
     isInBounds(corners) {
-    corners.array.forEach(element => {
-        if (element.x > this.pos.x - this.size/2 &&
-            element.x < this.pos.x + this.size/2 &&
-            element.y > this.pos.y - this.size/2 &&
-            element.y < this.pos.y + this.size/2)  {
-                return true;
+        var collided = false;
+        corners.forEach(element => {
+            if (element[0] > this.pos.x - this.size/2 &&
+                element[0] < this.pos.x + this.size/2 &&
+                element[1] > this.pos.y - this.size/2 &&
+                element[1] < this.pos.y + this.size/2)  {
+                collided = true;
             }
         });
-        return false;
+        return collided;
     }
 }

@@ -7,14 +7,21 @@ var height = canvas.height;
 var ctx = canvas.getContext("2d");
 
 var dobbz = new dobby.GameObject();
+var bobbz = new dobby.GameObject();
 
 function update(dt) {
     var vec = controls.getAxes();
     dobbz.update(vec, dt);
+    if (bobbz.isInBounds(dobbz.getCorners())) {
+        dobbz.color = 'blue';
+    } else {
+        dobbz.color = 'red';
+    }
 }
 
 function draw() {
     ctx.clearRect(0, 0, width, height);
+    bobbz.draw(ctx);
     dobbz.draw(ctx);
 }
 
@@ -32,5 +39,10 @@ var lastTime = 0;
 
 dobbz.pos.x = width/2;
 dobbz.pos.y = height/2;
+
+bobbz.pos.x = width/4;
+bobbz.pos.y = height * 3/4;
+bobbz.size = 80;
+bobbz.color = 'yellow';
 // start loop
 window.requestAnimationFrame(loop);
