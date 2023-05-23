@@ -9,6 +9,8 @@ var ctx = canvas.getContext("2d");
 var dobbz = new dobby.GameObject();
 var bobbz = new dobby.GameObject();
 
+var gobbz = new dobby.GameObject();
+
 function update(dt) {
     var vec = controls.getAxes();
     if (!dobbz.willCollide(vec, dt, bobbz.getCorners())) {
@@ -41,6 +43,10 @@ var lastTime = 0;
 
 dobbz.pos.x = width/2;
 dobbz.pos.y = height/2;
+
+gobbz.pos.x = width/2;
+gobbz.pos.y = height/2;
+gobbz.size = 500;
 
 bobbz.pos.x = width/4;
 bobbz.pos.y = height * 3/4;
