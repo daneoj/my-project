@@ -50,9 +50,9 @@ gobbz.pos.y = height/2;
 gobbz.size = 0.9 * width;
 gobbz.color = 'green';
 
-bobbz.pos.x = width/4;
-bobbz.pos.y = height * 3/4;
-bobbz.size = 80;
+bobbz.pos.x = width/2;
+bobbz.pos.y = height;
+bobbz.size = 200;
 bobbz.color = 'yellow';
 // start loop
 window.requestAnimationFrame(loop);
