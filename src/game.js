@@ -11,7 +11,9 @@ var bobbz = new dobby.GameObject();
 
 function update(dt) {
     var vec = controls.getAxes();
-    dobbz.update(vec, dt);
+    if (!dobbz.willCollide(vec, dt, bobbz.getCorners())) {
+        dobbz.update(vec, dt);
+    }
     if (bobbz.isInBounds(dobbz.getCorners())) {
         dobbz.color = 'blue';
     } else {
