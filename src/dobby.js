@@ -1,17 +1,15 @@
 class GameObject {
     constructor() {
         this.pos = {x: 0, y: 0};
-        this.size = 50;
-        this.spd = 0.45;
-        this.color = 'red';
+        this.width = 0;
+        this.height = 0;
+        this.spd = 0;
+        this.color = 'white';
     }
 
-    // eventually might want to let graphics lib handle drawing the GameObject
     draw(ctx) {
         ctx.fillStyle = this.color;
-        ctx.fillRect(this.pos.x - this.size/2,
-                    this.pos.y - this.size/2,
-                    this.size, this.size);
+        ctx.fillRect(this.pos.x - this.width/2, this.pos.y - this.height/2, this.width, this.height);
     }
 
     update(vec, dt) {
@@ -21,13 +19,13 @@ class GameObject {
 
     getCorners() {
         return [
-            [this.pos.x - this.size/2, this.pos.y - this.size/2],
-            [this.pos.x - this.size/2, this.pos.y + this.size/2],
-            [this.pos.x + this.size/2, this.pos.y - this.size/2],
-            [this.pos.x + this.size/2, this.pos.y + this.size/2]
+            [this.pos.x - this.width/2, this.pos.y - this.height/2],
+            [this.pos.x - this.width/2, this.pos.y + this.height/2],
+            [this.pos.x + this.width/2, this.pos.y - this.height/2],
+            [this.pos.x + this.width/2, this.pos.y + this.height/2]
         ];
     }
-    // might want to at least handle rectangles instead of squares for GO's collision
+
     isInBounds(corners) {
         var selfcorners = this.getCorners();
         var collided = false;
@@ -53,22 +51,34 @@ class GameObject {
         return collided;
     }
 
-    // stupidly expensive
     willCollide(vec, dt, corners) {
         var temp = new GameObject();
         temp.pos = { x: this.pos.x, y: this.pos.y };
-        temp.size = this.size;
+        temp.width = this.width;
+        temp.height = this.height;
         temp.spd = this.spd;
         if (!temp.isInBounds(corners)) {
             temp.update(vec, dt);
             if (temp.isInBounds(corners)) {
-                // we know this movement will cause a collision
                 return true;
             }
             return false;
         }
 
         return false;
+    }
+
+    // **********
+    // JSON Parse
+    // **********
+
+    parseGameObject(data) {
+        // default values if null (not in json)
+        this.pos = {x: data.x ?? 0, y: data.y ?? 0};
+        this.width = data.width ?? 10;
+        this.height = data.height ?? 10;
+        this.spd = data.spd ?? 0;
+        this.color = data.color ?? 'white';
     }
 }
 

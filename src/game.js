@@ -1,32 +1,30 @@
 import * as dobby from './dobby.js';
 import * as controls from './controls.js';
+import levelData from './levels.json' assert { type: 'json' };
 
 var canvas = document.getElementById("canvas");
 var width = canvas.width;
 var height = canvas.height;
 var ctx = canvas.getContext("2d");
 
-var dobbz = new dobby.GameObject();
-var bobbz = new dobby.GameObject();
-
-var gobbz = new dobby.GameObject();
-
 function update(dt) {
     var vec = controls.getAxes();
-    if (!dobbz.willCollide(vec, dt, bobbz.getCorners())) {
+    var willCollide = false;
+    walls.forEach(el => {
+        if (!willCollide) {
+            willCollide = dobbz.willCollide(vec, dt, el.getCorners());
+        }
+    });
+    if (!willCollide) {
         dobbz.update(vec, dt);
-    }
-    if (bobbz.isInBounds(dobbz.getCorners())) {
-        dobbz.color = 'blue';
-    } else {
-        dobbz.color = 'red';
     }
 }
 
 function draw() {
     ctx.clearRect(0, 0, width, height);
-    gobbz.draw(ctx);
-    bobbz.draw(ctx);
+    walls.forEach(wall => {
+        wall.draw(ctx);
+    })
     dobbz.draw(ctx);
 }
 
@@ -42,18 +40,17 @@ function loop(time) {
 // initialize
 var lastTime = 0;
 
-dobbz.pos.x = width/2;
-dobbz.pos.y = height/2;
+var level = levelData.levels[0];
+var dobbz = new dobby.GameObject();
+dobbz.parseGameObject(level.user);
 
-gobbz.pos.x = width/2;
-gobbz.pos.y = height/2;
-gobbz.size = 0.9 * width;
-gobbz.color = 'green';
+var walls = [];
+level.walls.forEach(element => {
+    var wall = new dobby.GameObject();
+    wall.parseGameObject(element);
+    walls.push(wall);
+});
 
 
-bobbz.pos.x = width/2;
-bobbz.pos.y = height;
-bobbz.size = 200;
-bobbz.color = 'yellow';
 // start loop
 window.requestAnimationFrame(loop);
