@@ -1,6 +1,6 @@
 import * as dobby from './dobby.js';
 import * as controls from './controls.js';
-import levelData from './levels.json' assert { type: 'json' };
+import levelData from './levels.js';
 
 var canvas = document.getElementById("canvas");
 var width = canvas.width;
@@ -50,7 +50,6 @@ level.walls.forEach(element => {
     wall.parseGameObject(element);
     walls.push(wall);
 });
-
 
 // start loop
 window.requestAnimationFrame(loop);
