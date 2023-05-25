@@ -26,14 +26,14 @@ class GameObject {
         ];
     }
 
-    isInBounds(corners) {
+    isInBounds(corners, vec = [0, 0]) {
         var selfcorners = this.getCorners();
         var collided = false;
         corners.forEach(element => {
-            if (element[0] > selfcorners[0][0] &&
-                element[0] < selfcorners[3][0] &&
-                element[1] > selfcorners[0][1] &&
-                element[1] < selfcorners[3][1]) {
+            if (element[0] > (selfcorners[0][0] + vec[0]) &&
+                element[0] < (selfcorners[3][0] + vec[0]) &&
+                element[1] > (selfcorners[0][1] + vec[1]) &&
+                element[1] < (selfcorners[3][1] + vec[1])) { 
                 collided = true;
             }
         });
@@ -41,10 +41,10 @@ class GameObject {
             return true;
         }
         selfcorners.forEach(element => {
-            if (element[0] > corners[0][0] &&
-                element[0] < corners[3][0] &&
-                element[1] > corners[0][1] &&
-                element[1] < corners[3][1]) {
+            if ((element[0]+ vec[0]) > corners[0][0] &&
+                (element[0]+ vec[0]) < corners[3][0] &&
+                (element[1]+ vec[1]) > corners[0][1] &&
+                (element[1]+ vec[1]) < corners[3][1]) {
                 collided = true;
             }
         });
@@ -52,20 +52,9 @@ class GameObject {
     }
 
     willCollide(vec, dt, corners) {
-        var temp = new GameObject();
-        temp.pos = { x: this.pos.x, y: this.pos.y };
-        temp.width = this.width;
-        temp.height = this.height;
-        temp.spd = this.spd;
-        if (!temp.isInBounds(corners)) {
-            temp.update(vec, dt);
-            if (temp.isInBounds(corners)) {
-                return true;
-            }
-            return false;
-        }
-
-        return false;
+        var movement = this.spd * dt;
+        var tempVec = vec.map(el => el * movement);
+        return this.isInBounds(corners, tempVec);
     }
 
     // **********
