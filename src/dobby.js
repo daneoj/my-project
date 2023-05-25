@@ -3,18 +3,12 @@ class GameObject {
         this.pos = {x: 0, y: 0};
         this.width = 0;
         this.height = 0;
-        this.spd = 0;
         this.color = 'white';
     }
 
     draw(ctx) {
         ctx.fillStyle = this.color;
         ctx.fillRect(this.pos.x - this.width/2, this.pos.y - this.height/2, this.width, this.height);
-    }
-
-    update(vec, dt) {
-        this.pos.x += vec[0] * dt * this.spd;
-        this.pos.y += vec[1] * dt * this.spd;
     }
 
     getCorners() {
@@ -51,6 +45,31 @@ class GameObject {
         return collided;
     }
 
+    // **********
+    // JSON Parse
+    // **********
+
+    parseGameObject(data) {
+        // default values if null (not in json)
+        this.pos = {x: data.x ?? 0, y: data.y ?? 0};
+        this.width = data.width ?? 10;
+        this.height = data.height ?? 10;
+        this.color = data.color ?? 'white';
+    }
+}
+
+
+class PlayerObject extends GameObject {
+    constructor() {
+        super();
+        this.spd = 0;
+    }
+    
+    update(vec, dt) {
+        this.pos.x += vec[0] * dt * this.spd;
+        this.pos.y += vec[1] * dt * this.spd;
+    }
+
     willCollide(vec, dt, corners) {
         var movement = this.spd * dt;
         var tempVec = vec.map(el => el * movement);
@@ -61,7 +80,7 @@ class GameObject {
     // JSON Parse
     // **********
 
-    parseGameObject(data) {
+    parsePlayerObject(data) {
         // default values if null (not in json)
         this.pos = {x: data.x ?? 0, y: data.y ?? 0};
         this.width = data.width ?? 10;
@@ -71,4 +90,4 @@ class GameObject {
     }
 }
 
-export { GameObject };
+export { GameObject, PlayerObject };

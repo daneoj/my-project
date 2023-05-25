@@ -41,8 +41,8 @@ function loop(time) {
 var lastTime = 0;
 
 var level = levelData.levels[0];
-var dobbz = new dobby.GameObject();
-dobbz.parseGameObject(level.user);
+var dobbz = new dobby.PlayerObject();
+dobbz.parsePlayerObject(level.user);
 
 var walls = [];
 level.walls.forEach(element => {
