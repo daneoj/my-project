@@ -5,7 +5,7 @@ export default
             "user": {
                 "x": 100,
                 "y": 100,
-                "height": 50,
+                "height": 55,
                 "width": 55,
                 "spd": 0.45,
                 "color": "red"
@@ -21,7 +21,7 @@ export default
                 {
                     "x": 500,
                     "y": 40,
-                    "height": 45,
+                    "height": 55,
                     "width": 500,
                     "color": "blue"
                 }

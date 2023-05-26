@@ -1,6 +1,7 @@
 import * as dobby from './dobby.js';
 import * as controls from './controls.js';
 import levelData from './levels.js';
+import { Camera } from './camera.js';
 
 var canvas = document.getElementById("canvas");
 var width = canvas.width;
@@ -27,11 +28,7 @@ function update(dt) {
 }
 
 function draw() {
-    ctx.clearRect(0, 0, width, height);
-    walls.forEach(wall => {
-        wall.draw(ctx);
-    })
-    dobbz.draw(ctx);
+    camera.drawObjs();
 }
 
 function loop(time) {
@@ -58,4 +55,9 @@ level.walls.forEach(element => {
 });
 
 // start loop
+var camera = new Camera(ctx, {x: -100, y:-150}, [width, height], 0.5);
+var gameObjList = walls.map(n => n);
+gameObjList.push(dobbz);
+camera.addToCamera(gameObjList);
+
 window.requestAnimationFrame(loop);
