@@ -11,6 +11,11 @@ class GameObject {
         ctx.fillRect(this.pos.x - this.width/2, this.pos.y - this.height/2, this.width, this.height);
     }
 
+    updatePos(vec) {
+        this.pos.x += vec[0];
+        this.pos.y += vec[1];
+    }
+
     getCorners() {
         return [
             [this.pos.x - this.width/2, this.pos.y - this.height/2],
@@ -64,16 +69,46 @@ class PlayerObject extends GameObject {
         super();
         this.spd = 0;
     }
-    
-    update(vec, dt) {
-        this.pos.x += vec[0] * dt * this.spd;
-        this.pos.y += vec[1] * dt * this.spd;
+
+    getMovementVec(vec, dt) {
+        return vec.map(e => e * dt * this.spd);
     }
 
-    willCollide(vec, dt, corners) {
-        var movement = this.spd * dt;
-        var tempVec = vec.map(el => el * movement);
-        return this.isInBounds(corners, tempVec);
+    willCollide(vec, corners) {
+        return this.isInBounds(corners, vec);
+    }
+
+    getAllowedMovement(vec, corners) {
+        var minX = corners[0][0];
+        var maxX = corners[3][0];
+        var minY = corners[0][1];
+        var maxY = corners[3][1];
+
+        if (vec[0] > 0) {
+            var xMov = minX - (this.pos.x + this.width/2);
+            if (xMov >= 0 && xMov < vec[0]) {
+                vec[0] = xMov;
+            } 
+        }
+        else if (vec[0] < 0) {
+            var xMov = maxX - (this.pos.x - this.width/2);
+            if (xMov <= 0 && xMov > vec[0]) {
+                vec[0] = xMov;
+            } 
+        }
+        if (vec[1] > 0) {
+            var yMov = minY - (this.pos.y + this.height/2);
+            if (yMov >= 0 && yMov < vec[1]) {
+                vec[1] = yMov;
+            } 
+        }
+        else if (vec[1] < 0) {
+            var yMov = maxY - (this.pos.y - this.height/2);
+            if (yMov <= 0 && yMov > vec[1]) {
+                vec[1] = yMov;
+            }
+        }
+        return vec;
     }
 
     // **********

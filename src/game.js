@@ -10,13 +10,19 @@ var ctx = canvas.getContext("2d");
 function update(dt) {
     var vec = controls.getAxes();
     var willCollide = false;
+    var moveVec = dobbz.getMovementVec(vec, dt);
     walls.forEach(el => {
         if (!willCollide) {
-            willCollide = dobbz.willCollide(vec, dt, el.getCorners());
+            willCollide = dobbz.willCollide(moveVec, el.getCorners());
         }
     });
     if (!willCollide) {
-        dobbz.update(vec, dt);
+        dobbz.updatePos(moveVec);
+    } else {
+        walls.forEach(w => {
+            moveVec = dobbz.getAllowedMovement(moveVec, w.getCorners());
+        });
+        dobbz.updatePos(moveVec);
     }
 }
 
