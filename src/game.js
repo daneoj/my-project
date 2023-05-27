@@ -13,6 +13,6 @@ function loop(time) {
 var lastTime = 0;
 
 var logic = new Logic();
-logic.init(levelData);
+logic.init(levelData.levels[0]);
 
 window.requestAnimationFrame(loop);

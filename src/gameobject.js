@@ -6,11 +6,6 @@ class GameObject {
         this.color = 'white';
     }
 
-    draw(ctx) {
-        ctx.fillStyle = this.color;
-        ctx.fillRect(this.pos.x - this.width/2, this.pos.y - this.height/2, this.width, this.height);
-    }
-
     updatePos(vec) {
         this.pos.x += vec[0];
         this.pos.y += vec[1];
@@ -29,10 +24,8 @@ class GameObject {
         var selfcorners = this.getCorners();
         var collided = false;
         corners.forEach(element => {
-            if (element[0] > (selfcorners[0][0] + vec[0]) &&
-                element[0] < (selfcorners[3][0] + vec[0]) &&
-                element[1] > (selfcorners[0][1] + vec[1]) &&
-                element[1] < (selfcorners[3][1] + vec[1])) { 
+            if (element[0] > (selfcorners[0][0] + vec[0]) && element[0] < (selfcorners[3][0] + vec[0]) &&
+                element[1] > (selfcorners[0][1] + vec[1]) && element[1] < (selfcorners[3][1] + vec[1])) { 
                 collided = true;
             }
         });
@@ -40,10 +33,8 @@ class GameObject {
             return true;
         }
         selfcorners.forEach(element => {
-            if ((element[0]+ vec[0]) > corners[0][0] &&
-                (element[0]+ vec[0]) < corners[3][0] &&
-                (element[1]+ vec[1]) > corners[0][1] &&
-                (element[1]+ vec[1]) < corners[3][1]) {
+            if ((element[0]+ vec[0]) > corners[0][0] && (element[0]+ vec[0]) < corners[3][0] &&
+                (element[1]+ vec[1]) > corners[0][1] && (element[1]+ vec[1]) < corners[3][1]) {
                 collided = true;
             }
         });
@@ -54,8 +45,7 @@ class GameObject {
     // JSON Parse
     // **********
 
-    parseGameObject(data) {
-        // default values if null (not in json)
+    parse(data) {
         this.pos = {x: data.x ?? 0, y: data.y ?? 0};
         this.width = data.width ?? 10;
         this.height = data.height ?? 10;
@@ -67,11 +57,11 @@ class GameObject {
 class PhysicsObject extends GameObject {
     constructor() {
         super();
-        this.spd = 0;
+        this.vel = {x: 0, y: 0};
     }
 
-    getMovementVec(vec, dt) {
-        return vec.map(e => e * dt * this.spd);
+    getMovementVec(dt) {
+        return this.vel.map(e => e * dt);
     }
 
     willCollide(vec, corners) {
@@ -114,14 +104,8 @@ class PhysicsObject extends GameObject {
     // **********
     // JSON Parse
     // **********
-
-    parsePhysicsObject(data) {
-        // default values if null (not in json)
-        this.pos = {x: data.x ?? 0, y: data.y ?? 0};
-        this.width = data.width ?? 10;
-        this.height = data.height ?? 10;
-        this.spd = data.spd ?? 0;
-        this.color = data.color ?? 'white';
+    parse(data) {
+        super.parse(data);
     }
 }
 

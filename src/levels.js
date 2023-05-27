@@ -7,7 +7,7 @@ export default
                 "y": 0,
                 "height": 1,
                 "width": 1,
-                "spd": 5,
+                "moveSpd": 5,
                 "color": "red"
             },
             "walls": [
