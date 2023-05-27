@@ -26,7 +26,7 @@ export default
                     "color": "blue"
                 },
                 {
-                    "x": 9,
+                    "x": 10,
                     "y": -5,
                     "height": 2,
                     "width": 10,
@@ -34,10 +34,31 @@ export default
                 },
                 {
                     "x": 20,
-                    "y": -4,
+                    "y": -5,
                     "height": 2,
                     "width": 10,
                     "color": "blue"
+                },
+                {
+                    "x": 25,
+                    "y": -3,
+                    "height": 6,
+                    "width": 2,
+                    "color": "green"
+                },
+                {
+                    "x": 25,
+                    "y": -3,
+                    "height": 6,
+                    "width": 2,
+                    "color": "green"
+                },
+                {
+                    "x": 35,
+                    "y": 1,
+                    "height": 2,
+                    "width": 10,
+                    "color": "green"
                 }
             ]
         }
