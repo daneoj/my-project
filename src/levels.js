@@ -24,6 +24,20 @@ export default
                     "height": 2,
                     "width": 10,
                     "color": "blue"
+                },
+                {
+                    "x": 9,
+                    "y": -5,
+                    "height": 2,
+                    "width": 10,
+                    "color": "blue"
+                },
+                {
+                    "x": 20,
+                    "y": -4,
+                    "height": 2,
+                    "width": 10,
+                    "color": "blue"
                 }
             ]
         }

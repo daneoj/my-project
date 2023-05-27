@@ -8,8 +8,8 @@ var controllerManager = {
 }
 
 var keyMap = {
-    83: 'up',
-    87: 'down',
+    83: 'down',
+    87: 'up',
     65: 'left',
     68: 'right',
 }

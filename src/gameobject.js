@@ -54,6 +54,7 @@ class PhysicsObject extends GameObject {
     constructor() {
         super();
         this.vel = {x: 0, y: 0};
+        this.colliderFlags = {top: false, bottom: false, left: false, right: false};
     }
 
     getMovementVec(dt) {
@@ -95,6 +96,18 @@ class PhysicsObject extends GameObject {
             }
         }
         return vec;
+    }
+
+    setColliderFlags(expected, allowed) {
+        var dX = allowed[0] - expected[0];
+        var dY = allowed[1] - expected[1];
+        for (var flag in this.colliderFlags) {
+            this.colliderFlags[flag] = false;
+        }
+        if (dY > 0) this.colliderFlags.bottom = true;
+        if (dY < 0) this.colliderFlags.top = true;
+        if (dX > 0) this.colliderFlags.left = true;
+        if (dX < 0) this.colliderFlags.right = true;
     }
 
     parse(data) {

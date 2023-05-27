@@ -32,21 +32,19 @@ class Logic {
     update(dt) {
         var vec = controls.getAxes();
         var willCollide = [];
-        var moveVec = this.dobbz.update(vec, dt);
+        var origVec = this.dobbz.update(vec, dt);
+        var moveVec = origVec.map(n => n);
         this.walls.forEach((e, idx, arr) => {
             if (this.dobbz.willCollide(moveVec, e.getCorners())) {
                 willCollide.push(idx);
             }
         });
-        if (willCollide.length == 0) {
-            this.dobbz.updatePos(moveVec);
-            this.camera.moveCam(moveVec);
-        } else {
+        if (willCollide.length != 0) {
             willCollide.forEach(e => { moveVec = this.dobbz.getAllowedMovement(moveVec, this.walls[e].getCorners()) });
-            
-            this.dobbz.updatePos(moveVec);
-            this.camera.moveCam(moveVec);
         }
+        this.dobbz.setColliderFlags(origVec, moveVec);
+        this.dobbz.updatePos(moveVec);
+        this.camera.moveCam(moveVec);
     }
 
     draw() {
