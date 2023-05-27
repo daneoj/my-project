@@ -59,6 +59,13 @@ export default
                     "height": 2,
                     "width": 10,
                     "color": "green"
+                },
+                {
+                    "x": 40,
+                    "y": 6,
+                    "height": 2,
+                    "width": 10,
+                    "color": "yellow"
                 }
             ]
         }

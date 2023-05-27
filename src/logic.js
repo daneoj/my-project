@@ -45,6 +45,7 @@ class Logic {
         this.dobbz.setColliderFlags(origVec, moveVec);
         this.dobbz.updatePos(moveVec);
         this.camera.moveCam(moveVec);
+        //this.camera.setScale(this.camera.scale += dt * 2);
     }
 
     draw() {

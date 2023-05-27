@@ -5,7 +5,7 @@ class PlayerObject extends PhysicsObject {
         super();
         this.moveSpd = 0;
         this.gravAcc = -30;
-        this.maxGrav = -12;
+        this.maxGrav = -20;
         this.hDecel = -40;
         this.hAccel = 40;
         this.hMaxVel = 10; 
@@ -43,7 +43,7 @@ class PlayerObject extends PhysicsObject {
     tickDecel(dt) {
         if (this.vel.x > this.hMaxVel) this.vel.x = this.hMaxVel;
         if (this.vel.x < -this.hMaxVel) this.vel.x = -this.hMaxVel;
-        
+        if (!this.colliderFlags.bottom) { return; } // hmm
         if (this.vel.x > 0) {
             this.vel.x += this.hDecel * dt;
             if (this.vel.x < 0) this.vel.x = 0;

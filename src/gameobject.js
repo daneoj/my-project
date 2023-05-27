@@ -23,18 +23,18 @@ class GameObject {
     isInBounds(corners, vec = [0, 0]) {
         var selfcorners = this.getCorners();
         var collided = false;
-        corners.forEach(element => {
-            if (element[0] > (selfcorners[0][0] + vec[0]) && element[0] < (selfcorners[3][0] + vec[0]) &&
-                element[1] > (selfcorners[0][1] + vec[1]) && element[1] < (selfcorners[3][1] + vec[1])) { 
+        corners.forEach(e => {
+            if (e[0] > (selfcorners[0][0] + vec[0]) && e[0] < (selfcorners[3][0] + vec[0]) &&
+                e[1] > (selfcorners[0][1] + vec[1]) && e[1] < (selfcorners[3][1] + vec[1])) { 
                 collided = true;
             }
         });
         if (collided) {
             return true;
         }
-        selfcorners.forEach(element => {
-            if ((element[0]+ vec[0]) > corners[0][0] && (element[0]+ vec[0]) < corners[3][0] &&
-                (element[1]+ vec[1]) > corners[0][1] && (element[1]+ vec[1]) < corners[3][1]) {
+        selfcorners.forEach(e => {
+            if ((e[0]+ vec[0]) > corners[0][0] && (e[0]+ vec[0]) < corners[3][0] &&
+                (e[1]+ vec[1]) > corners[0][1] && (e[1]+ vec[1]) < corners[3][1]) {
                 collided = true;
             }
         });
@@ -104,10 +104,10 @@ class PhysicsObject extends GameObject {
         for (var flag in this.colliderFlags) {
             this.colliderFlags[flag] = false;
         }
-        if (dY > 0) this.colliderFlags.bottom = true;
-        if (dY < 0) this.colliderFlags.top = true;
-        if (dX > 0) this.colliderFlags.left = true;
-        if (dX < 0) this.colliderFlags.right = true;
+        if (dY > 0) { this.colliderFlags.bottom = true; this.vel.y = 0; }
+        if (dY < 0) { this.colliderFlags.top = true; this.vel.y = 0; }
+        if (dX > 0) { this.colliderFlags.left = true; this.vel.x = 0; }
+        if (dX < 0) { this.colliderFlags.right = true; this.vel.x = 0; }
     }
 
     parse(data) {

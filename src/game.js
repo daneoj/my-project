@@ -2,7 +2,7 @@ import { Logic } from "./logic.js";
 import levelData from './levels.js';
 
 function loop(time) {
-    var dt = (time - lastTime)/1000; //convert to s
+    var dt = (time - lastTime)/1000; //convert to ms
     logic.tick(dt);
 
     lastTime = time;
