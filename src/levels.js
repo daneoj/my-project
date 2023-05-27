@@ -3,26 +3,26 @@ export default
     "levels": [
         {
             "user": {
-                "x": 100,
-                "y": 100,
-                "height": 55,
-                "width": 55,
-                "spd": 0.45,
+                "x": 0,
+                "y": 0,
+                "height": 1,
+                "width": 1,
+                "spd": 5,
                 "color": "red"
             },
             "walls": [
                 {
-                    "x": 40,
-                    "y": 500,
-                    "height": 500,
-                    "width": 55,
+                    "x": 5,
+                    "y": 5,
+                    "height": 2,
+                    "width": 10,
                     "color": "blue"
                 },
                 {
-                    "x": 500,
-                    "y": 40,
-                    "height": 55,
-                    "width": 500,
+                    "x": -5,
+                    "y": 2,
+                    "height": 10,
+                    "width": 2,
                     "color": "blue"
                 }
             ]
