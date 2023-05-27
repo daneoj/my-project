@@ -5,11 +5,16 @@ class PlayerObject extends PhysicsObject {
         super();
         this.moveSpd = 0;
         this.gravAcc = -30;
-        this.maxGrav = -20;
+        this.maxGrav = -30;
+        this.maxWallSlide = -5;
         this.hDecel = -40;
         this.hAccel = 40;
+        this.hAirAccel = 5;
+        this.hAirDecel = -5;
         this.hMaxVel = 10; 
         this.jumpVel = 18;
+        this.walljumpvVel = 16;
+        this.walljumphVel = 12;
     }
 
     update(controlVec, dt) {
@@ -28,6 +33,13 @@ class PlayerObject extends PhysicsObject {
             if (this.colliderFlags.bottom) {
                 this.vel.y = this.jumpVel;
             }
+            if (this.colliderFlags.left) {
+                this.vel.y = this.walljumpvVel;
+                this.vel.x = this.walljumphVel;
+            } else if (this.colliderFlags.right) {
+                this.vel.y = this.walljumpvVel;
+                this.vel.x = -this.walljumphVel;
+            }
         }
     }
 
@@ -38,17 +50,22 @@ class PlayerObject extends PhysicsObject {
         } else {
             this.vel.y = this.maxGrav;
         }
+
+        if (this.colliderFlags.left || this.colliderFlags.right) {
+            if (this.vel.y < this.maxWallSlide) {
+                this.vel.y = this.maxWallSlide;
+            }
+        }
     }
 
     tickDecel(dt) {
         if (this.vel.x > this.hMaxVel) this.vel.x = this.hMaxVel;
         if (this.vel.x < -this.hMaxVel) this.vel.x = -this.hMaxVel;
-        if (!this.colliderFlags.bottom) { return; } // hmm
         if (this.vel.x > 0) {
-            this.vel.x += this.hDecel * dt;
+            this.vel.x += (this.colliderFlags.bottom ? this.hDecel : this.hAirDecel) * dt;
             if (this.vel.x < 0) this.vel.x = 0;
         } else if (this.vel.x < 0) {
-            this.vel.x -= this.hDecel * dt;
+            this.vel.x -= (this.colliderFlags.bottom ? this.hDecel : this.hAirDecel) * dt;
             if (this.vel.x > 0) this.vel.x = 0;
         }
     }
