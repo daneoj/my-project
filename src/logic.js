@@ -18,7 +18,7 @@ class Logic {
             wall.parse(element);
             this.walls.push(wall);
         });
-        this.camera = new Camera(ctx, {x: 0, y: 0}, [canvas.width, canvas.height], 50);
+        this.camera = new Camera(ctx, {x: 0, y: 0}, [canvas.width, canvas.height], 30);
         var gameObjList = this.walls.map(n => n);
         gameObjList.push(this.dobbz);
         this.camera.addToCamera(gameObjList);
@@ -31,14 +31,19 @@ class Logic {
 
     update(dt) {
         var vec = controls.getAxes();
-        var willCollide = false;
-        var moveVec = vec.map(n => n * dt * this.dobbz.moveSpd);
-        this.walls.forEach(el => { if (!willCollide) { willCollide = this.dobbz.willCollide(moveVec, el.getCorners()) } });
-        if (!willCollide) {
+        var willCollide = [];
+        var moveVec = this.dobbz.update(vec, dt);
+        this.walls.forEach((e, idx, arr) => {
+            if (this.dobbz.willCollide(moveVec, e.getCorners())) {
+                willCollide.push(idx);
+            }
+        });
+        if (willCollide.length == 0) {
             this.dobbz.updatePos(moveVec);
             this.camera.moveCam(moveVec);
         } else {
-            this.walls.forEach(w => { moveVec = this.dobbz.getAllowedMovement(moveVec, w.getCorners()) });
+            willCollide.forEach(e => { moveVec = this.dobbz.getAllowedMovement(moveVec, this.walls[e].getCorners()) });
+            
             this.dobbz.updatePos(moveVec);
             this.camera.moveCam(moveVec);
         }

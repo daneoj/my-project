@@ -19,10 +19,10 @@ export default
                     "color": "blue"
                 },
                 {
-                    "x": -5,
-                    "y": 2,
-                    "height": 10,
-                    "width": 2,
+                    "x": 0,
+                    "y": -5,
+                    "height": 2,
+                    "width": 10,
                     "color": "blue"
                 }
             ]

@@ -41,10 +41,6 @@ class GameObject {
         return collided;
     }
 
-    // **********
-    // JSON Parse
-    // **********
-
     parse(data) {
         this.pos = {x: data.x ?? 0, y: data.y ?? 0};
         this.width = data.width ?? 10;
@@ -61,7 +57,7 @@ class PhysicsObject extends GameObject {
     }
 
     getMovementVec(dt) {
-        return this.vel.map(e => e * dt);
+        return [this.vel.x * dt, this.vel.y * dt];
     }
 
     willCollide(vec, corners) {
@@ -101,9 +97,6 @@ class PhysicsObject extends GameObject {
         return vec;
     }
 
-    // **********
-    // JSON Parse
-    // **********
     parse(data) {
         super.parse(data);
     }

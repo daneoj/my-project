@@ -9,8 +9,8 @@ class Camera {
     }
 
     drawObj(gameObj) {
-        var xPos = (gameObj.pos.x - gameObj.width/2 - this.worldCoords.x) * this.scale + this.width/2;
-        var yPos = (gameObj.pos.y - gameObj.height/2 - this.worldCoords.y) * this.scale + this.height/2;
+        var xPos = ((gameObj.pos.x - gameObj.width/2 - this.worldCoords.x) * this.scale) + this.width/2;
+        var yPos = this.height/2 - ((gameObj.pos.y + gameObj.height/2 - this.worldCoords.y) * this.scale);
         
         this.canvas.fillStyle = gameObj.color;
         this.canvas.fillRect(xPos, yPos, gameObj.width*this.scale, gameObj.height*this.scale);
