@@ -1,11 +1,11 @@
-import { PlayerObject, GameObject } from './dobby.js';
+import { PhysicsObject, GameObject } from './gameobject.js';
 import * as controls from './controls.js';
 import { Camera } from './camera.js';
 
 class Logic {
     constructor() {
         this.canvas = document.getElementById("canvas");
-        this.dobbz = PlayerObject;
+        this.dobbz = PhysicsObject;
         this.walls = [];
     }
 
@@ -16,8 +16,8 @@ class Logic {
 
         var level = levelInfo.levels[0];
         
-        this.dobbz = new PlayerObject();
-        this.dobbz.parsePlayerObject(level.user);
+        this.dobbz = new PhysicsObject();
+        this.dobbz.parsePhysicsObject(level.user);
         
         this.walls = [];
         level.walls.forEach(element => {

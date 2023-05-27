@@ -64,7 +64,7 @@ class GameObject {
 }
 
 
-class PlayerObject extends GameObject {
+class PhysicsObject extends GameObject {
     constructor() {
         super();
         this.spd = 0;
@@ -115,7 +115,7 @@ class PlayerObject extends GameObject {
     // JSON Parse
     // **********
 
-    parsePlayerObject(data) {
+    parsePhysicsObject(data) {
         // default values if null (not in json)
         this.pos = {x: data.x ?? 0, y: data.y ?? 0};
         this.width = data.width ?? 10;
@@ -125,4 +125,4 @@ class PlayerObject extends GameObject {
     }
 }
 
-export { GameObject, PlayerObject };
+export { GameObject, PhysicsObject };
