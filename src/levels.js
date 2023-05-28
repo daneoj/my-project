@@ -47,6 +47,13 @@ export default
                     "color": "green"
                 },
                 {
+                    "x": 20,
+                    "y": 8,
+                    "height": 15,
+                    "width": 2,
+                    "color": "green"
+                },
+                {
                     "x": 25,
                     "y": -3,
                     "height": 6,
