@@ -4,15 +4,22 @@ class PlayerObject extends PhysicsObject {
     constructor() {
         super();
         this.moveSpd = 0;
+
         this.gravAcc = -30;
         this.maxGrav = -30;
+
         this.maxWallSlide = -5;
+
         this.hDecel = -40;
         this.hAccel = 40;
+
         this.hAirAccel = 15;
         this.hAirDecel = -15;
-        this.hMaxDriftVel = 10; 
+
+        this.hMaxDriftVel = 10;
+
         this.jumpVel = 18;
+        
         this.walljumpvVel = 16;
         this.walljumphVel = 20;
     }
@@ -28,19 +35,10 @@ class PlayerObject extends PhysicsObject {
         if (this.colliderFlags.bottom) {
             this.vel.y = 0;
         }
-        var accel = this.isGrounded() ? this.hAccel : this.hAirAccel;
-        var decel = (this.isGrounded() ? this.hDecel : this.hAirDecel)
-        var dVx = (controlVec[0] * (accel - decel) * dt);
-        if (this.vel.x > this.hMaxDriftVel) {
-            if (dVx < 0) {
-                this.vel.x += dVx;
-            }
-        }
-        else if (this.vel.x < -this.hMaxDriftVel) {
-            if (dVx > 0) {
-                this.vel.x += dVx;
-            }
-        } else {
+        var accel = this.getAccel() - this.getDecel();
+        var dVx = (controlVec[0] * accel * dt);
+        if (!(this.vel.x > this.hMaxDriftVel && dVx > 0) &&
+            !(this.vel.x < -this.hMaxDriftVel && dVx < 0)) {
             this.vel.x += dVx;
         }
 
@@ -75,16 +73,24 @@ class PlayerObject extends PhysicsObject {
 
     tickDecel(dt) {
         if (this.vel.x > 0) {
-            this.vel.x += (this.isGrounded() ? this.hDecel : this.hAirDecel) * dt;
+            this.vel.x += this.getDecel() * dt;
             if (this.vel.x < 0) this.vel.x = 0;
         } else if (this.vel.x < 0) {
-            this.vel.x -= (this.isGrounded() ? this.hDecel : this.hAirDecel) * dt;
+            this.vel.x -= this.getDecel() * dt;
             if (this.vel.x > 0) this.vel.x = 0;
         }
     }
 
     isGrounded() {
         return this.colliderFlags.bottom;
+    }
+
+    getAccel() {
+        return this.isGrounded() ? this.hAccel : this.hAirAccel;
+    }
+
+    getDecel() {
+        return this.isGrounded() ? this.hDecel : this.hAirDecel;
     }
 
     parse(data) {
